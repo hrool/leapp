@@ -134,7 +134,7 @@ jobs:
   publish-draft:
     runs-on: ubuntu-latest
     environment: prod
-    needs: [ tag-validation, build-linux, build-win, build-macos-arm, build-macos-x64 ]
+    needs: [ tag-validation, build-linux ]
     if: needs.tag-validation.outputs.validator == 1
     steps:
 
