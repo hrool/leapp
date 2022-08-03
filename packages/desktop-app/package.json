@@ -86,8 +86,8 @@
         "Icon": "/usr/share/icons/hicolor/256x256/apps/leapp.png"
       },
       "target": [
-        "deb",
-        "AppImage"
+        "rpm",
+        "pacman"
       ]
     },
     "mac": {
