@@ -75,63 +75,6 @@ jobs:
           TAG_VERSION=${TAG_VERSION:1}
           aws s3 cp ./release/ "${{ env.S3_BUCKET }}/$TAG_VERSION/" --recursive
 
-      - name: Clean build
-        run: |
-          cd packages/desktop-app
-          rm -Rf ./release/mac
-          rm -Rf ./release/mac-unpacked
-          rm -Rf ./release/.cache
-          rm -Rf ./release/builder-debug.yml
-          rm -Rf ./release/builder-effective-config.yaml
-          TAG_VERSION=${{ needs.tag-validation.outputs.tag-version }}
-          TAG_VERSION=${TAG_VERSION:1}
-          rm "./release/Leapp-$TAG_VERSION-mac.zip"
-          rm "./release/Leapp-$TAG_VERSION-mac.zip.blockmap"
-          zip "./release/Leapp-$TAG_VERSION-mac.zip" "./release/Leapp-$TAG_VERSION.dmg"
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-east-1
-
-      - name: Release draft to S3
-        run: |
-          cd packages/desktop-app
-          TAG_VERSION=${{ needs.tag-validation.outputs.tag-version }}
-          TAG_VERSION=${TAG_VERSION:1}
-          aws s3 cp ./release/ "${{ env.S3_BUCKET }}/$TAG_VERSION/" --recursive
-
-      - name: Clean build
-        run: |
-          cd packages/desktop-app
-          rm -Rf ./release/mac
-          rm -Rf ./release/mac-unpacked
-          rm -Rf ./release/.cache
-          rm -Rf ./release/builder-debug.yml
-          rm -Rf ./release/builder-effective-config.yaml
-          rm -Rf ./release/mac-arm64
-          TAG_VERSION=${{ needs.tag-validation.outputs.tag-version }}
-          TAG_VERSION=${TAG_VERSION:1}
-          rm "./release/Leapp-$TAG_VERSION-arm64-mac.zip"
-          rm "./release/Leapp-$TAG_VERSION-arm64-mac.zip.blockmap"
-          zip "./release/Leapp-$TAG_VERSION-mac-arm64.zip" "./release/Leapp-$TAG_VERSION-arm64.dmg"
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-east-1
-
-      - name: Release draft to S3
-        run: |
-          cd packages/desktop-app
-          TAG_VERSION=${{ needs.tag-validation.outputs.tag-version }}
-          TAG_VERSION=${TAG_VERSION:1}
-          aws s3 cp ./release/ "${{ env.S3_BUCKET }}/$TAG_VERSION/" --recursive
-
   publish-draft:
     runs-on: ubuntu-latest
     environment: prod
